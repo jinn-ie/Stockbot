@@ -1,11 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from app.models.parameter_models import *
-from pydantic import BaseModel
 from app.models.user_models import User
 from app.dependencies.db import *
 from app.dependencies.jwt_utils import JWTUtil
 from app.services.auth_service import AuthService
-from typing import Annotated
+from typing import Annotated 
 
 
 router = APIRouter(
@@ -15,7 +14,6 @@ router = APIRouter(
 #회원가입
 @router.post('/register', response_model=AuthResp)
 def register(req: AuthSignupReq, db=Depends(get_db_session),
-             jwtUtil: JWTUtil = Depends(),
              authService: AuthService = Depends()):
     existing_user = db.query(User).filter(User.login_id == req.login_id).first()
 
