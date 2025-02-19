@@ -4,7 +4,8 @@ from app.models.user_models import User
 from app.dependencies.db import *
 from app.dependencies.jwt_utils import JWTUtil
 from app.services.auth_service import AuthService
-from typing import Annotated 
+from typing import Annotated #조필9
+
 
 
 router = APIRouter(
@@ -58,14 +59,14 @@ def auth_logout(db: Session=Depends(get_db_session), authorization: str=Header(N
     token = authorization.split(" ")[1]  # "Bearer <토큰>"에서 토큰만 추출
     
     # table에 해당 토큰이 있는지 확인
-    user = db.query(User).filter(User.access_token == token).first()
+    user = db.query(User).filter(User.access_token == token).first() #조필10 왜 짝대기 그어져있냐 query, exec 차이
     if not user:
         raise HTTPException(status_code=401, detail="유효하지 않은 토큰입니다.")
 
     # 현재 유저의 토큰을 삭제 (NULL 처리)
     db.query(User).filter(User.id == user.id).update({"access_token": None})
     db.commit()
-
+    #db.refresh 조필11
     return {"message": "로그아웃 되었습니다."}
 
 @router.post('/check-token')

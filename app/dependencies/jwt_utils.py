@@ -6,7 +6,6 @@ SECRET_KEY = '1234' #임시값
 ALG = "HS256"
 
 class JWTUtil:
-    
     # 1. JWT 토큰 생성 함수
     def create_token(self, payload: dict, expires_delta: timedelta | 
                      None = timedelta(minutes=30)):
@@ -21,7 +20,7 @@ class JWTUtil:
 
     def decode_token(self, token: str) -> dict | None:
         try:
-            return jwt.decode(token, SECRET_KEY, algorithms=[ALG])
+            return jwt.decode(token, SECRET_KEY, algorithms=[ALG]) #조필8
         except:
             pass
         return None

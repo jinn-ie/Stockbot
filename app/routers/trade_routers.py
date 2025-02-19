@@ -93,8 +93,6 @@ def sell_order(req: stock_to_buy_and_sell, db = Depends(get_db_session),authoriz
 
     else:
         raise HTTPException(status_code=401, detail="너무 많아요")
-    
-
 
     db.commit()
 
